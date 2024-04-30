@@ -65,30 +65,32 @@ const images = [
 ];
 
 const elGalleryList = document.querySelector('.js-gallery');
-
-const newElForList = images.reduce(
-  (acc, { preview, original, description }) => {
-    return (acc += `<li class="gallery-item">
-      <a class="gallery-link" href="${original}">
-        <img
-         class="gallery-image"
-         src="${preview}"
-         data-source="${original}"
-         alt="${description}"
-        />
-      </a>
-    </li>`);
-  },
-  ''
-);
-
-elGalleryList.insertAdjacentHTML('beforeend', newElForList);
+const galleryItems = images
+  .map(({ preview, original, description }) => {
+    return `<li class="gallery-item">
+    <a class="gallery-link" href="${original}">
+    <img
+    class="gallery-image"
+    src="${preview}"
+    data-source="${original}"
+    alt="${description}"
+    />
+    </a>
+    </li>
+    `;
+  })
+  .join('');
+console.log(galleryItems);
+elGalleryList.insertAdjacentHTML('afterbegin', galleryItems);
 
 elGalleryList.addEventListener('click', event => {
   event.preventDefault();
-  if (event.target.nodeName !== 'IMG') return;
-  const instance = basicLightbox.create(
-    `<img src="${event.target.dataset.source}" width="1400" height="900"/>`
-  );
+  console.log(event.currentTarget);
+  if (event.target.nodeName !== 'IMG') {
+    return;
+  }
+  const instance = basicLightbox.create(`
+  <img src="${event.target.dataset.source}" width="1400" height="900">
+`);
   instance.show();
 });
