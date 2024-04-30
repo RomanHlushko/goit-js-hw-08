@@ -80,7 +80,6 @@ const galleryItems = images
     `;
   })
   .join('');
-console.log(galleryItems);
 elGalleryList.insertAdjacentHTML('afterbegin', galleryItems);
 
 elGalleryList.addEventListener('click', event => {
